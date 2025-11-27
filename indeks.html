@@ -1,0 +1,1059 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Physics IGCSE Grade 10</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100%;
+      width: 100%;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .container {
+      width: 100%;
+      min-height: 100%;
+      padding: 40px 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      color: white;
+    }
+
+    h1 {
+      margin: 0 0 10px 0;
+      font-size: 42px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .subtitle {
+      font-size: 18px;
+      opacity: 0.95;
+    }
+
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto 40px auto;
+    }
+
+    .topic-card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .topic-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+    }
+
+    .topic-icon {
+      font-size: 36px;
+      margin-bottom: 12px;
+    }
+
+    .topic-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #2d3748;
+    }
+
+    .topic-desc {
+      font-size: 14px;
+      color: #4a5568;
+      line-height: 1.5;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      overflow-y: auto;
+    }
+
+    .modal.active {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 800px;
+      width: 100%;
+      position: relative;
+      margin: auto;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: #e2e8f0;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .close-btn:hover {
+      background: #cbd5e0;
+    }
+
+    .modal-header {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: #2d3748;
+    }
+
+    .interactive-section {
+      background: #f7fafc;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .slider-container {
+      margin: 20px 0;
+    }
+
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #4a5568;
+    }
+
+    .slider {
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: #e2e8f0;
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #667eea;
+      cursor: pointer;
+    }
+
+    .slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #667eea;
+      cursor: pointer;
+      border: none;
+    }
+
+    .visualization {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 16px 0;
+      border: 2px solid #e2e8f0;
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .quiz-section {
+      margin-top: 24px;
+    }
+
+    .question {
+      background: #f7fafc;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .question-text {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #2d3748;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option {
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .option:hover {
+      border-color: #667eea;
+      background: #f7fafc;
+    }
+
+    .option.selected {
+      border-color: #667eea;
+      background: #edf2f7;
+    }
+
+    .option.correct {
+      border-color: #48bb78;
+      background: #f0fff4;
+    }
+
+    .option.incorrect {
+      border-color: #f56565;
+      background: #fff5f5;
+    }
+
+    .submit-btn {
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 16px;
+    }
+
+    .submit-btn:hover {
+      background: #5a67d8;
+    }
+
+    .submit-btn:disabled {
+      background: #cbd5e0;
+      cursor: not-allowed;
+    }
+
+    .result {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .result.success {
+      background: #f0fff4;
+      color: #22543d;
+    }
+
+    .result.error {
+      background: #fff5f5;
+      color: #742a2a;
+    }
+
+    footer {
+      text-align: center;
+      color: white;
+      padding: 20px;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .formula {
+      background: white;
+      border-left: 4px solid #667eea;
+      padding: 12px 16px;
+      margin: 16px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      border-radius: 4px;
+    }
+
+    .ball {
+      width: 40px;
+      height: 40px;
+      background: #667eea;
+      border-radius: 50%;
+      position: absolute;
+      transition: all 0.3s ease-out;
+    }
+
+    .pendulum {
+      position: relative;
+      width: 100%;
+      height: 200px;
+    }
+
+    .pendulum-string {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 2px;
+      height: 150px;
+      background: #2d3748;
+      transform-origin: top center;
+    }
+
+    .pendulum-bob {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 30px;
+      height: 30px;
+      background: #f56565;
+      border-radius: 50%;
+      transform: translateX(-50%);
+    }
+
+    .wave {
+      width: 100%;
+      height: 100px;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="container">
+   <header>
+    <h1 id="main-title">Physics IGCSE Grade 10</h1>
+    <p class="subtitle" id="subtitle">Interactive learning with demonstrations and practice questions</p>
+   </header>
+   <main>
+    <div class="topics-grid" id="topics-grid"></div>
+   </main>
+   <footer id="footer">
+    <p id="footer-text">Master physics concepts through interactive exploration! 🚀</p>
+   </footer>
+  </div>
+  <div class="modal" id="modal">
+   <div class="modal-content" id="modal-content"><button class="close-btn" id="close-btn" aria-label="Close modal">×</button>
+    <div id="modal-body"></div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      main_title: "Physics IGCSE Grade 10",
+      subtitle: "Interactive learning with demonstrations and practice questions",
+      footer_text: "Master physics concepts through interactive exploration! 🚀",
+      background_color: "#667eea",
+      surface_color: "#ffffff",
+      text_color: "#2d3748",
+      primary_action_color: "#667eea",
+      secondary_action_color: "#5a67d8",
+      font_family: "Segoe UI",
+      font_size: 16
+    };
+
+    const topics = [
+      {
+        id: 'motion',
+        icon: '🚗',
+        title: 'Motion and Forces',
+        description: 'Explore speed, velocity, acceleration and Newton\'s laws',
+        content: createMotionContent
+      },
+      {
+        id: 'energy',
+        icon: '⚡',
+        title: 'Energy and Work',
+        description: 'Understand energy transfers, work done and power',
+        content: createEnergyContent
+      },
+      {
+        id: 'waves',
+        icon: '🌊',
+        title: 'Waves',
+        description: 'Learn about wave properties, sound and light',
+        content: createWavesContent
+      },
+      {
+        id: 'electricity',
+        icon: '💡',
+        title: 'Electricity',
+        description: 'Study circuits, current, voltage and resistance',
+        content: createElectricityContent
+      }
+    ];
+
+    function renderTopics() {
+      const grid = document.getElementById('topics-grid');
+      grid.innerHTML = topics.map(topic => `
+        <div class="topic-card" onclick="openTopic('${topic.id}')">
+          <div class="topic-icon">${topic.icon}</div>
+          <div class="topic-title">${topic.title}</div>
+          <div class="topic-desc">${topic.description}</div>
+        </div>
+      `).join('');
+    }
+
+    function openTopic(topicId) {
+      const topic = topics.find(t => t.id === topicId);
+      const modal = document.getElementById('modal');
+      const modalBody = document.getElementById('modal-body');
+      
+      modalBody.innerHTML = topic.content();
+      modal.classList.add('active');
+      
+      if (topicId === 'motion') initMotionDemo();
+      if (topicId === 'waves') initWavesDemo();
+    }
+
+    document.getElementById('close-btn').addEventListener('click', () => {
+      document.getElementById('modal').classList.remove('active');
+    });
+
+    document.getElementById('modal').addEventListener('click', (e) => {
+      if (e.target.id === 'modal') {
+        document.getElementById('modal').classList.remove('active');
+      }
+    });
+
+    function createMotionContent() {
+      return `
+        <h2 class="modal-header">Motion and Forces</h2>
+        
+        <div class="interactive-section">
+          <h3>Speed Calculator</h3>
+          <div class="formula">Speed = Distance ÷ Time</div>
+          
+          <div class="slider-container">
+            <div class="slider-label">
+              <span>Distance (m):</span>
+              <span id="distance-value">100</span>
+            </div>
+            <input type="range" min="10" max="500" value="100" class="slider" id="distance-slider">
+          </div>
+          
+          <div class="slider-container">
+            <div class="slider-label">
+              <span>Time (s):</span>
+              <span id="time-value">10</span>
+            </div>
+            <input type="range" min="1" max="50" value="10" class="slider" id="time-slider">
+          </div>
+          
+          <div class="visualization">
+            <div style="text-align: center;">
+              <div style="font-size: 48px; font-weight: 700; color: #667eea;" id="speed-result">10.0</div>
+              <div style="font-size: 18px; color: #4a5568; margin-top: 8px;">m/s</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="interactive-section">
+          <h3>Newton's Second Law</h3>
+          <div class="formula">Force = Mass × Acceleration (F = ma)</div>
+          <p>Move the ball by adjusting the force!</p>
+          
+          <div class="slider-container">
+            <div class="slider-label">
+              <span>Force (N):</span>
+              <span id="force-value">50</span>
+            </div>
+            <input type="range" min="0" max="200" value="50" class="slider" id="force-slider">
+          </div>
+          
+          <div class="visualization" id="motion-viz">
+            <div class="ball" id="motion-ball"></div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3>Practice Questions</h3>
+          <div class="question">
+            <div class="question-text">1. A car travels 150m in 10 seconds. What is its speed?</div>
+            <div class="options" id="q1-options">
+              <div class="option" onclick="selectOption('q1', 0, 1)">A) 10 m/s</div>
+              <div class="option" onclick="selectOption('q1', 1, 1)">B) 15 m/s</div>
+              <div class="option" onclick="selectOption('q1', 2, 1)">C) 20 m/s</div>
+              <div class="option" onclick="selectOption('q1', 3, 1)">D) 25 m/s</div>
+            </div>
+          </div>
+          
+          <div class="question">
+            <div class="question-text">2. What is the unit of force?</div>
+            <div class="options" id="q2-options">
+              <div class="option" onclick="selectOption('q2', 0, 2)">A) Newton (N)</div>
+              <div class="option" onclick="selectOption('q2', 1, 2)">B) Joule (J)</div>
+              <div class="option" onclick="selectOption('q2', 2, 2)">C) Watt (W)</div>
+              <div class="option" onclick="selectOption('q2', 3, 2)">D) Pascal (Pa)</div>
+            </div>
+          </div>
+          
+          <button class="submit-btn" id="motion-submit" onclick="checkMotionAnswers()">Check Answers</button>
+          <div id="motion-result"></div>
+        </div>
+      `;
+    }
+
+    function createEnergyContent() {
+      return `
+        <h2 class="modal-header">Energy and Work</h2>
+        
+        <div class="interactive-section">
+          <h3>Work Done Calculator</h3>
+          <div class="formula">Work Done = Force × Distance (W = F × d)</div>
+          
+          <div class="slider-container">
+            <div class="slider-label">
+              <span>Force (N):</span>
+              <span id="work-force-value">50</span>
+            </div>
+            <input type="range" min="10" max="200" value="50" class="slider" id="work-force-slider">
+          </div>
+          
+          <div class="slider-container">
+            <div class="slider-label">
+              <span>Distance (m):</span>
+              <span id="work-distance-value">10</span>
+            </div>
+            <input type="range" min="1" max="50" value="10" class="slider" id="work-distance-slider">
+          </div>
+          
+          <div class="visualization">
+            <div style="text-align: center;">
+              <div style="font-size: 48px; font-weight: 700; color: #667eea;" id="work-result">500</div>
+              <div style="font-size: 18px; color: #4a5568; margin-top: 8px;">Joules (J)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="interactive-section">
+          <h3>Energy Types</h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px;">
+            <div style="background: white; padding: 16px; border-radius: 8px; border: 2px solid #e2e8f0;">
+              <div style="font-size: 24px; margin-bottom: 8px;">🔋</div>
+              <div style="font-weight: 600; margin-bottom: 4px;">Kinetic Energy</div>
+              <div style="font-size: 14px; color: #4a5568;">Energy of motion</div>
+              <div class="formula" style="margin-top: 8px; font-size: 14px;">KE = ½mv²</div>
+            </div>
+            <div style="background: white; padding: 16px; border-radius: 8px; border: 2px solid #e2e8f0;">
+              <div style="font-size: 24px; margin-bottom: 8px;">⛰️</div>
+              <div style="font-weight: 600; margin-bottom: 4px;">Potential Energy</div>
+              <div style="font-size: 14px; color: #4a5568;">Stored energy</div>
+              <div class="formula" style="margin-top: 8px; font-size: 14px;">PE = mgh</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3>Practice Questions</h3>
+          <div class="question">
+            <div class="question-text">1. A force of 20N moves an object 5m. How much work is done?</div>
+            <div class="options" id="energy-q1-options">
+              <div class="option" onclick="selectOption('energy-q1', 0, 1)">A) 50 J</div>
+              <div class="option" onclick="selectOption('energy-q1', 1, 1)">B) 100 J</div>
+              <div class="option" onclick="selectOption('energy-q1', 2, 1)">C) 150 J</div>
+              <div class="option" onclick="selectOption('energy-q1', 3, 1)">D) 200 J</div>
+            </div>
+          </div>
+          
+          <button class="submit-btn" onclick="checkEnergyAnswers()">Check Answers</button>
+          <div id="energy-result"></div>
+        </div>
+      `;
+    }
+
+    function createWavesContent() {
+      return `
+        <h2 class="modal-header">Waves</h2>
+        
+        <div class="interactive-section">
+          <h3>Wave Properties</h3>
+          <div class="formula">Wave Speed = Frequency × Wavelength (v = fλ)</div>
+          
+          <div class="slider-container">
+            <div class="slider-label">
+              <span>Frequency (Hz):</span>
+              <span id="frequency-value">5</span>
+            </div>
+            <input type="range" min="1" max="20" value="5" class="slider" id="frequency-slider">
+          </div>
+          
+          <div class="visualization">
+            <svg class="wave" id="wave-svg" viewBox="0 0 400 100">
+              <path id="wave-path" fill="none" stroke="#667eea" stroke-width="3"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="interactive-section">
+          <h3>Types of Waves</h3>
+          <div style="display: grid; gap: 16px; margin-top: 16px;">
+            <div style="background: white; padding: 16px; border-radius: 8px; border: 2px solid #e2e8f0;">
+              <div style="font-weight: 600; margin-bottom: 8px;">🔊 Transverse Waves</div>
+              <div style="font-size: 14px; color: #4a5568;">Oscillations perpendicular to direction of travel (e.g., light, water waves)</div>
+            </div>
+            <div style="background: white; padding: 16px; border-radius: 8px; border: 2px solid #e2e8f0;">
+              <div style="font-weight: 600; margin-bottom: 8px;">🎵 Longitudinal Waves</div>
+              <div style="font-size: 14px; color: #4a5568;">Oscillations parallel to direction of travel (e.g., sound waves)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3>Practice Questions</h3>
+          <div class="question">
+            <div class="question-text">1. What type of wave is sound?</div>
+            <div class="options" id="waves-q1-options">
+              <div class="option" onclick="selectOption('waves-q1', 0, 2)">A) Transverse</div>
+              <div class="option" onclick="selectOption('waves-q1', 1, 2)">B) Longitudinal</div>
+              <div class="option" onclick="selectOption('waves-q1', 2, 2)">C) Electromagnetic</div>
+              <div class="option" onclick="selectOption('waves-q1', 3, 2)">D) Mechanical</div>
+            </div>
+          </div>
+          
+          <button class="submit-btn" onclick="checkWavesAnswers()">Check Answers</button>
+          <div id="waves-result"></div>
+        </div>
+      `;
+    }
+
+    function createElectricityContent() {
+      return `
+        <h2 class="modal-header">Electricity</h2>
+        
+        <div class="interactive-section">
+          <h3>Ohm's Law Calculator</h3>
+          <div class="formula">Voltage = Current × Resistance (V = IR)</div>
+          
+          <div class="slider-container">
+            <div class="slider-label">
+              <span>Current (A):</span>
+              <span id="current-value">2</span>
+            </div>
+            <input type="range" min="0.1" max="10" step="0.1" value="2" class="slider" id="current-slider">
+          </div>
+          
+          <div class="slider-container">
+            <div class="slider-label">
+              <span>Resistance (Ω):</span>
+              <span id="resistance-value">10</span>
+            </div>
+            <input type="range" min="1" max="100" value="10" class="slider" id="resistance-slider">
+          </div>
+          
+          <div class="visualization">
+            <div style="text-align: center;">
+              <div style="font-size: 48px; font-weight: 700; color: #667eea;" id="voltage-result">20</div>
+              <div style="font-size: 18px; color: #4a5568; margin-top: 8px;">Volts (V)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="interactive-section">
+          <h3>Electrical Power</h3>
+          <div class="formula">Power = Voltage × Current (P = VI)</div>
+          <div class="formula">Power = Current² × Resistance (P = I²R)</div>
+          
+          <div style="background: white; padding: 16px; border-radius: 8px; margin-top: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-weight: 600;">Current Power:</div>
+                <div style="font-size: 14px; color: #4a5568; margin-top: 4px;">Based on values above</div>
+              </div>
+              <div style="font-size: 32px; font-weight: 700; color: #667eea;" id="power-result">40 W</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-section">
+          <h3>Practice Questions</h3>
+          <div class="question">
+            <div class="question-text">1. A circuit has a current of 3A and resistance of 6Ω. What is the voltage?</div>
+            <div class="options" id="elec-q1-options">
+              <div class="option" onclick="selectOption('elec-q1', 0, 1)">A) 9 V</div>
+              <div class="option" onclick="selectOption('elec-q1', 1, 1)">B) 18 V</div>
+              <div class="option" onclick="selectOption('elec-q1', 2, 1)">C) 24 V</div>
+              <div class="option" onclick="selectOption('elec-q1', 3, 1)">D) 30 V</div>
+            </div>
+          </div>
+          
+          <button class="submit-btn" onclick="checkElectricityAnswers()">Check Answers</button>
+          <div id="elec-result"></div>
+        </div>
+      `;
+    }
+
+    const userAnswers = {};
+
+    function selectOption(questionId, optionIndex, correctIndex) {
+      const options = document.getElementById(`${questionId}-options`).children;
+      
+      for (let i = 0; i < options.length; i++) {
+        options[i].classList.remove('selected');
+      }
+      
+      options[optionIndex].classList.add('selected');
+      userAnswers[questionId] = optionIndex;
+    }
+
+    function checkMotionAnswers() {
+      const resultDiv = document.getElementById('motion-result');
+      const q1Options = document.getElementById('q1-options').children;
+      const q2Options = document.getElementById('q2-options').children;
+      
+      let correct = 0;
+      let total = 2;
+      
+      if (userAnswers['q1'] === 1) {
+        q1Options[1].classList.add('correct');
+        correct++;
+      } else if (userAnswers['q1'] !== undefined) {
+        q1Options[userAnswers['q1']].classList.add('incorrect');
+        q1Options[1].classList.add('correct');
+      }
+      
+      if (userAnswers['q2'] === 0) {
+        q2Options[0].classList.add('correct');
+        correct++;
+      } else if (userAnswers['q2'] !== undefined) {
+        q2Options[userAnswers['q2']].classList.add('incorrect');
+        q2Options[0].classList.add('correct');
+      }
+      
+      resultDiv.className = 'result ' + (correct === total ? 'success' : 'error');
+      resultDiv.textContent = `You got ${correct} out of ${total} correct!`;
+      
+      document.getElementById('motion-submit').disabled = true;
+    }
+
+    function checkEnergyAnswers() {
+      const resultDiv = document.getElementById('energy-result');
+      const q1Options = document.getElementById('energy-q1-options').children;
+      
+      let correct = 0;
+      let total = 1;
+      
+      if (userAnswers['energy-q1'] === 1) {
+        q1Options[1].classList.add('correct');
+        correct++;
+      } else if (userAnswers['energy-q1'] !== undefined) {
+        q1Options[userAnswers['energy-q1']].classList.add('incorrect');
+        q1Options[1].classList.add('correct');
+      }
+      
+      resultDiv.className = 'result ' + (correct === total ? 'success' : 'error');
+      resultDiv.textContent = `You got ${correct} out of ${total} correct!`;
+    }
+
+    function checkWavesAnswers() {
+      const resultDiv = document.getElementById('waves-result');
+      const q1Options = document.getElementById('waves-q1-options').children;
+      
+      let correct = 0;
+      let total = 1;
+      
+      if (userAnswers['waves-q1'] === 1) {
+        q1Options[1].classList.add('correct');
+        correct++;
+      } else if (userAnswers['waves-q1'] !== undefined) {
+        q1Options[userAnswers['waves-q1']].classList.add('incorrect');
+        q1Options[1].classList.add('correct');
+      }
+      
+      resultDiv.className = 'result ' + (correct === total ? 'success' : 'error');
+      resultDiv.textContent = `You got ${correct} out of ${total} correct!`;
+    }
+
+    function checkElectricityAnswers() {
+      const resultDiv = document.getElementById('elec-result');
+      const q1Options = document.getElementById('elec-q1-options').children;
+      
+      let correct = 0;
+      let total = 1;
+      
+      if (userAnswers['elec-q1'] === 1) {
+        q1Options[1].classList.add('correct');
+        correct++;
+      } else if (userAnswers['elec-q1'] !== undefined) {
+        q1Options[userAnswers['elec-q1']].classList.add('incorrect');
+        q1Options[1].classList.add('correct');
+      }
+      
+      resultDiv.className = 'result ' + (correct === total ? 'success' : 'error');
+      resultDiv.textContent = `You got ${correct} out of ${total} correct!`;
+    }
+
+    function initMotionDemo() {
+      const distanceSlider = document.getElementById('distance-slider');
+      const timeSlider = document.getElementById('time-slider');
+      const forceSlider = document.getElementById('force-slider');
+      
+      if (distanceSlider) {
+        distanceSlider.addEventListener('input', (e) => {
+          document.getElementById('distance-value').textContent = e.target.value;
+          updateSpeed();
+        });
+      }
+      
+      if (timeSlider) {
+        timeSlider.addEventListener('input', (e) => {
+          document.getElementById('time-value').textContent = e.target.value;
+          updateSpeed();
+        });
+      }
+      
+      if (forceSlider) {
+        forceSlider.addEventListener('input', (e) => {
+          document.getElementById('force-value').textContent = e.target.value;
+          updateMotionBall(e.target.value);
+        });
+      }
+
+      const workForceSlider = document.getElementById('work-force-slider');
+      const workDistanceSlider = document.getElementById('work-distance-slider');
+      
+      if (workForceSlider) {
+        workForceSlider.addEventListener('input', (e) => {
+          document.getElementById('work-force-value').textContent = e.target.value;
+          updateWork();
+        });
+      }
+      
+      if (workDistanceSlider) {
+        workDistanceSlider.addEventListener('input', (e) => {
+          document.getElementById('work-distance-value').textContent = e.target.value;
+          updateWork();
+        });
+      }
+
+      const currentSlider = document.getElementById('current-slider');
+      const resistanceSlider = document.getElementById('resistance-slider');
+      
+      if (currentSlider) {
+        currentSlider.addEventListener('input', (e) => {
+          document.getElementById('current-value').textContent = parseFloat(e.target.value).toFixed(1);
+          updateVoltage();
+        });
+      }
+      
+      if (resistanceSlider) {
+        resistanceSlider.addEventListener('input', (e) => {
+          document.getElementById('resistance-value').textContent = e.target.value;
+          updateVoltage();
+        });
+      }
+    }
+
+    function updateSpeed() {
+      const distance = parseFloat(document.getElementById('distance-slider').value);
+      const time = parseFloat(document.getElementById('time-slider').value);
+      const speed = (distance / time).toFixed(1);
+      document.getElementById('speed-result').textContent = speed;
+    }
+
+    function updateMotionBall(force) {
+      const ball = document.getElementById('motion-ball');
+      if (ball) {
+        const position = (force / 200) * 90;
+        ball.style.left = position + '%';
+      }
+    }
+
+    function updateWork() {
+      const force = parseFloat(document.getElementById('work-force-slider').value);
+      const distance = parseFloat(document.getElementById('work-distance-slider').value);
+      const work = force * distance;
+      document.getElementById('work-result').textContent = work;
+    }
+
+    function updateVoltage() {
+      const current = parseFloat(document.getElementById('current-slider').value);
+      const resistance = parseFloat(document.getElementById('resistance-slider').value);
+      const voltage = (current * resistance).toFixed(1);
+      const power = (current * voltage).toFixed(1);
+      document.getElementById('voltage-result').textContent = voltage;
+      document.getElementById('power-result').textContent = power + ' W';
+    }
+
+    function initWavesDemo() {
+      const frequencySlider = document.getElementById('frequency-slider');
+      
+      if (frequencySlider) {
+        frequencySlider.addEventListener('input', (e) => {
+          document.getElementById('frequency-value').textContent = e.target.value;
+          drawWave(parseInt(e.target.value));
+        });
+        
+        drawWave(5);
+      }
+    }
+
+    function drawWave(frequency) {
+      const path = document.getElementById('wave-path');
+      if (!path) return;
+      
+      let pathData = 'M 0 50';
+      const amplitude = 30;
+      const wavelength = 400 / frequency;
+      
+      for (let x = 0; x <= 400; x += 2) {
+        const y = 50 + amplitude * Math.sin((x / wavelength) * 2 * Math.PI);
+        pathData += ` L ${x} ${y}`;
+      }
+      
+      path.setAttribute('d', pathData);
+    }
+
+    async function onConfigChange(config) {
+      const mainTitle = document.getElementById('main-title');
+      const subtitle = document.getElementById('subtitle');
+      const footerText = document.getElementById('footer-text');
+
+      if (mainTitle) {
+        mainTitle.textContent = config.main_title || defaultConfig.main_title;
+      }
+      if (subtitle) {
+        subtitle.textContent = config.subtitle || defaultConfig.subtitle;
+      }
+      if (footerText) {
+        footerText.textContent = config.footer_text || defaultConfig.footer_text;
+      }
+
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = 'Tahoma, Geneva, Verdana, sans-serif';
+      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+
+      const baseSize = config.font_size || defaultConfig.font_size;
+      if (mainTitle) mainTitle.style.fontSize = `${baseSize * 2.625}px`;
+      if (subtitle) subtitle.style.fontSize = `${baseSize * 1.125}px`;
+      document.body.style.fontSize = `${baseSize}px`;
+
+      document.body.style.background = `linear-gradient(135deg, ${config.background_color || defaultConfig.background_color} 0%, ${config.secondary_action_color || defaultConfig.secondary_action_color} 100%)`;
+
+      const cards = document.querySelectorAll('.topic-card, .modal-content, .interactive-section, .option');
+      cards.forEach(card => {
+        card.style.background = config.surface_color || defaultConfig.surface_color;
+      });
+
+      const textElements = document.querySelectorAll('.topic-title, .topic-desc, .modal-header, .question-text, h3');
+      textElements.forEach(el => {
+        el.style.color = config.text_color || defaultConfig.text_color;
+      });
+
+      const primaryButtons = document.querySelectorAll('.submit-btn');
+      primaryButtons.forEach(btn => {
+        btn.style.background = config.primary_action_color || defaultConfig.primary_action_color;
+      });
+
+      const sliderThumbs = document.querySelectorAll('.slider');
+      sliderThumbs.forEach(slider => {
+        slider.style.setProperty('--thumb-color', config.primary_action_color || defaultConfig.primary_action_color);
+      });
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => config.surface_color || defaultConfig.surface_color,
+              set: (value) => {
+                config.surface_color = value;
+                window.elementSdk.setConfig({ surface_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.primary_action_color || defaultConfig.primary_action_color,
+              set: (value) => {
+                config.primary_action_color = value;
+                window.elementSdk.setConfig({ primary_action_color: value });
+              }
+            },
+            {
+              get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+              set: (value) => {
+                config.secondary_action_color = value;
+                window.elementSdk.setConfig({ secondary_action_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => {
+              config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (value) => {
+              config.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['main_title', config.main_title || defaultConfig.main_title],
+          ['subtitle', config.subtitle || defaultConfig.subtitle],
+          ['footer_text', config.footer_text || defaultConfig.footer_text]
+        ])
+      });
+    }
+
+    renderTopics();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a4e72453535ce82',t:'MTc2NDIxMzE3Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
